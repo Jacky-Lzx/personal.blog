@@ -140,6 +140,7 @@
 }
 .post-title {
   color: var(--text);
+  font-family: var(--font-body); /* 中文标题用霞鹜文楷，否则继承终端的等宽字体 */
   font-size: 14.5px;
   transition: color .2s;
   overflow: hidden;
@@ -195,13 +196,13 @@
 }
 .meta-item { display: inline-flex; align-items: center; gap: 6px; }
 
-.post-body { line-height: 2; font-size: 14.5px; font-family: var(--font-sans); }
+.post-body { line-height: 2; font-size: 14.5px; font-family: var(--font-body); }
 .post-body > * + * { margin-top: 1em; }
 .post-body h1,
 .post-body h2,
 .post-body h3,
 .post-body h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   line-height: 1.4;
   margin-top: 1.6em;
 }

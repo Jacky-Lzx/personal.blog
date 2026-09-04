@@ -1,5 +1,6 @@
 node_modules/
 dist/
+scripts/.cache/
 .vite-ssg-temp/
 *.log
 .DS_Store

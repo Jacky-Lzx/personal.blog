@@ -18,6 +18,23 @@ npm run build     # 构建 SSG 产物到 dist/
 npm run preview   # 预览构建产物
 ```
 
+## 中文字体（霞鹜文楷）
+
+正文中文使用 [LXGW WenKai（霞鹜文楷）](https://github.com/lxgw/LxgwWenKai)（SIL OFL 1.1，可商用）。
+字体经 `scripts/wenkai_subset.py` 子集化并按 `unicode-range` 切成 28 片 woff2
+（站点当前用到的字符在前，其余按语料频率排序），浏览器只按需加载用到的片，
+现有页面仅下载约 190KB。
+
+**新增/修改文章后**，若出现字体回退（个别字变宋体/黑体），重新生成子集：
+
+```bash
+pip install fonttools brotli   # 如未安装
+python3 scripts/wenkai_subset.py
+npm run build
+```
+
+字体文件与许可证见 `public/fonts/wenkai/`（含 OFL.txt）。
+
 ## 写作
 
 在 `src/posts/` 下新建 `.md` 文件即可，frontmatter 字段：

@@ -32,6 +32,8 @@
   --radius: 10px;
   --font-mono: "SF Mono", "JetBrains Mono", "Fira Code", Consolas, monospace;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Noto Sans SC", sans-serif;
+  /* 正文中文用霞鹜文楷（SIL OFL 1.1，按 unicode-range 分片加载），西文用 Times New Roman（无则回退系统衬线体） */
+  --font-body: "LXGW WenKai", "Times New Roman", Times, Georgia, serif;
 }
 
 /* ============ Catppuccin Latte Tokens（亮色，data-theme="latte"） ============ */
