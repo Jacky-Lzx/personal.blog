@@ -187,7 +187,7 @@
   gap: 14px;
   text-decoration: none;
 }
-.tag-name { color: var(--mauve); font-weight: 600; font-size: 15px; }
+.tag-name { color: var(--mauve); font-weight: 600; font-size: 15px; font-family: var(--font-mono); }
 .tag-link:hover .tag-name { text-decoration: underline; }
 .tag-count { color: var(--overlay1); font-size: 12px; }
 
