@@ -1,0 +1,40 @@
+/* ============ Base ============ */
+body {
+  background: var(--base);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--mauve);
+  color: var(--crust);
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--crust); }
+::-webkit-scrollbar-thumb { background: var(--surface1); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--surface2); }
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+a:hover { color: var(--lavender); }
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ============ Swap（咖啡 -> 奶茶） ============ */
+.swap del {
+  color: var(--overlay0);
+  text-decoration-thickness: 2px;
+}
+.swap .alt {
+  color: var(--peach);
+  font-weight: 600;
+}
