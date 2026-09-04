@@ -121,7 +121,7 @@
 .terminal-title { margin-left: auto; color: var(--overlay1); font-size: 12px; }
 .terminal-body { padding: 18px 20px; line-height: 1.9; }
 
-.t-prompt  { color: var(--green); }
+.t-prompt  { color: var(--green); margin-right: 0.35em; }
 .t-cmd     { color: var(--text); }
 .t-key     { color: var(--sky); }
 .t-val     { color: var(--yellow); }
