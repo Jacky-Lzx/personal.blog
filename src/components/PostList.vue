@@ -6,7 +6,9 @@ const props = defineProps({
   tag: { type: String, default: null },
 });
 
-const list = props.tag ? posts.filter((p) => p.tags.includes(props.tag)) : posts;
+const list = props.tag
+  ? posts.filter((p) => p.tags.includes(props.tag))
+  : posts;
 </script>
 
 <template>
@@ -15,7 +17,7 @@ const list = props.tag ? posts.filter((p) => p.tags.includes(props.tag)) : posts
       <span class="dot red"></span>
       <span class="dot yellow"></span>
       <span class="dot green"></span>
-      <span class="terminal-title">lzx@sjtu: ~/blog</span>
+      <span class="terminal-title">lzx@blog</span>
     </div>
     <div class="terminal-body">
       <p class="cmd-line">
@@ -24,22 +26,25 @@ const list = props.tag ? posts.filter((p) => p.tags.includes(props.tag)) : posts
         <template v-if="tag">
           <span class="t-key">--tag</span> <span class="t-val">{{ tag }}</span>
         </template>
-        <template v-else>
-          posts/
-        </template>
+        <template v-else> posts/ </template>
         <span class="t-comment"># {{ list.length }} articles</span>
       </p>
       <ul class="post-list">
         <li v-for="p in list" :key="p.slug" class="post-row">
-          <RouterLink :to="`/posts/${p.slug}`" class="post-date">{{ p.date }}</RouterLink>
-          <RouterLink :to="`/posts/${p.slug}`" class="post-title">{{ p.title }}</RouterLink>
+          <RouterLink :to="`/posts/${p.slug}`" class="post-date">{{
+            p.date
+          }}</RouterLink>
+          <RouterLink :to="`/posts/${p.slug}`" class="post-title">{{
+            p.title
+          }}</RouterLink>
           <span class="post-tags">
             <RouterLink
               v-for="t in p.tags"
               :key="t"
               :to="`/tags/${encodeURIComponent(t)}`"
               class="chip hl-mauve post-tag"
-            >#{{ t }}</RouterLink>
+              >#{{ t }}</RouterLink
+            >
           </span>
         </li>
       </ul>

@@ -147,6 +147,7 @@
   white-space: nowrap;
 }
 .post-row:hover .post-title { color: var(--mauve); }
+.post-row:hover .post-tag { background: var(--base); }
 .post-tags { display: inline-flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
 .post-tag { text-decoration: none; }
 .post-tag:hover { text-decoration: underline; }

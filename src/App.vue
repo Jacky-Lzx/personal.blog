@@ -11,9 +11,7 @@ const router = useRouter();
 /* 每页 title / description */
 useHead(() => ({
   title: route.meta.title || "李泽玺的博客",
-  meta: [
-    { name: "description", content: route.meta.description || "" },
-  ],
+  meta: [{ name: "description", content: route.meta.description || "" }],
 }));
 
 /* 滚动进入视口渐显（同 personal.homepage 的 reveal.js） */
@@ -33,7 +31,7 @@ function applyReveal() {
         }
       });
     },
-    { threshold: 0.12 }
+    { threshold: 0.12 },
   );
   els.forEach((el) => observer.observe(el));
 }
