@@ -4,7 +4,13 @@ import { useRoute } from "vue-router";
 import PostList from "../components/PostList.vue";
 
 const route = useRoute();
-const tag = computed(() => decodeURIComponent(route.params.tag || ""));
+// 标签页是显式静态路由（/tags/:tag 非动态参数），从路径末段取标签名
+const tag = computed(
+  () =>
+    decodeURIComponent(
+      route.params.tag || route.path.split("/").filter(Boolean).pop() || ""
+    )
+);
 </script>
 
 <template>
