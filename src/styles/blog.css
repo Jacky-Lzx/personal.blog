@@ -56,6 +56,9 @@
 .nav-link.active .nav-num { color: var(--green); border-color: var(--green); }
 
 .theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin-left: 8px;
   width: 36px;
   height: 36px;
@@ -63,7 +66,6 @@
   border: 1px solid var(--surface1);
   background: transparent;
   color: var(--subtext2);
-  font-size: 16px;
   cursor: pointer;
   transition: border-color .2s, transform .2s, box-shadow .2s;
 }
@@ -72,6 +74,13 @@
   transform: translateY(-2px);
   box-shadow: 0 6px 18px var(--shadow-color);
 }
+.theme-toggle svg {
+  width: 17px;
+  height: 17px;
+}
+.theme-toggle .icon-sun { display: none; }
+:root[data-theme="latte"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="latte"] .theme-toggle .icon-moon { display: none; }
 
 /* ============ 布局 ============ */
 .layout { display: flex; flex-direction: column; min-height: 100vh; }
