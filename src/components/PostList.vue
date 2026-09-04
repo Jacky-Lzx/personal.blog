@@ -27,7 +27,7 @@ const list = props.tag
           <span class="t-key">--tag</span> <span class="t-val">{{ tag }}</span>
         </template>
         <template v-else> posts/ </template>
-        <span class="t-comment"># {{ list.length }} articles</span>
+        <span class="t-comment"> # {{ list.length }} articles</span>
       </p>
       <ul class="post-list">
         <li v-for="p in list" :key="p.slug" class="post-row">
