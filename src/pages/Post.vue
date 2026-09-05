@@ -83,10 +83,11 @@ watch(
       <h1 class="post-title-h1">{{ post.title }}</h1>
       <p class="post-meta">
         <span class="t-prompt">❯</span>
-        <span class="t-cmd">stat</span> <span class="t-val">posts/{{ post.slug }}.md</span>
-        <span class="t-comment">#</span>
-        <span class="meta-item">date: <span class="t-key">{{ post.date }}</span></span>
-        <span class="meta-item">read: <span class="t-key">~{{ post.readingTime }} min</span></span>
+        <span class="t-cmd">stat</span>
+        <span class="t-val"> posts/{{ post.slug }}.md</span>
+        <span class="t-comment"> #</span>
+        <span class="meta-item"> date: <span class="t-key">{{ post.date }}</span></span>
+        <span class="meta-item"> read: <span class="t-key">~{{ post.readingTime }} min</span></span>
         <span v-if="post.tags.length" class="post-tags meta-item">
           <RouterLink
             v-for="t in post.tags"

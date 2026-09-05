@@ -24,9 +24,9 @@ const list = props.tag
         <span class="t-prompt">❯</span>
         <span class="t-cmd">ls</span> <span class="t-key">-lt</span>
         <template v-if="tag">
-          <span class="t-key">--tag</span> <span class="t-val">{{ tag }}</span>
+          <span class="t-key"> --tag</span> <span class="t-val">{{ tag }}</span>
         </template>
-        <template v-else> posts/ </template>
+        <template v-else><span> posts/</span></template>
         <span class="t-comment"> # {{ list.length }} articles</span>
       </p>
       <ul class="post-list">

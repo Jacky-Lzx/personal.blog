@@ -14,7 +14,7 @@ import { allTags } from "../lib/posts";
       <p class="cmd-line">
         <span class="t-prompt">❯</span>
         <span class="t-cmd">tag</span> <span class="t-key">-l</span>
-        <span class="t-comment"># {{ allTags.length }} tags</span>
+        <span class="t-comment"> # {{ allTags.length }} tags</span>
       </p>
       <ul class="tag-list">
         <li v-for="t in allTags" :key="t.tag">

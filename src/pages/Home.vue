@@ -11,8 +11,7 @@ import { posts } from "../lib/posts";
     </p>
     <h1>李泽玺的博客</h1>
     <p class="hero-sub">
-      科研 · 生活
-      <span class="t-comment"># 共 {{ posts.length }} 篇</span>
+      科研 · 生活<span class="t-comment"> # 共 {{ posts.length }} 篇</span>
     </p>
   </section>
 
