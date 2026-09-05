@@ -9,10 +9,12 @@ description: 博客上线：技术选型、目录结构与写作工作流。
 
 ## 为什么是这个技术栈
 
-- **Vite + Vue 3**：开发体验好，组件化复用主页的设计语言
-- **vite-ssg**：构建时把每个页面预渲染成纯静态 HTML，SEO 友好、首屏快，部署到 GitHub Pages 零配置
-- **marked + highlight.js**：Markdown 渲染和代码高亮
-- **零 blog 框架**：没有 Hexo/Hugo/Astro 的约定，整个站点就是普通 Vue 工程，每一行都能看懂
+- 前端框架：Vite + Vue 3
+- 静态生成：vite-ssg
+  - 构建时把每个页面预渲染成纯静态 HTML，SEO 友好、首屏快，部署到 GitHub Pages 零配置
+- Markdown 渲染和代码高亮：marked + highlight.js
+  - 轻量成熟，不引入额外框架依赖
+- 零 blog 框架
 
 ## 写作工作流
 
