@@ -127,6 +127,7 @@
 .t-val     { color: var(--yellow); }
 .t-comment { color: var(--overlay0); }
 .t-error   { color: var(--red); }
+.t-ok      { color: var(--green); font-family: var(--font-mono); }
 
 /* ============ 文章列表 ============ */
 .cmd-line { margin-bottom: 10px; }
@@ -326,6 +327,37 @@
 
 .post-body ul, .post-body ol { padding-left: 1.6em; }
 .post-body li::marker { color: var(--mauve); }
+
+/* 任务列表：disabled 的 checkbox 不吃 accent-color（浏览器禁用态一律画灰），
+   所以 appearance: none 后自己画：已勾选 = 绿色实心 + 对勾，未勾选 = 空框 */
+.post-body input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  margin-right: 7px;
+  vertical-align: -2px;
+  border: 1.5px solid var(--surface2);
+  border-radius: 4px;
+  background: var(--mantle);
+  position: relative;
+  cursor: default;
+}
+.post-body input[type="checkbox"]:checked {
+  background: var(--green);
+  border-color: var(--green);
+}
+.post-body input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--crust);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
 
 .post-body img {
   max-width: 100%;
