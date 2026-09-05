@@ -3,7 +3,7 @@ id: blog-tour
 aliases:
   - 博客功能展示
 tags:
-  - misc
+  - web
 date: 2025-09-01
 description: "博客功能展示：Markdown、代码高亮、公式、Obsidian 语法与双向链接。"
 ---
