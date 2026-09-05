@@ -1,4 +1,5 @@
 node_modules/
+.venv/
 dist/
 scripts/.cache/
 .vite-ssg-temp/
