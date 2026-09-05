@@ -43,4 +43,4 @@ frontmatter 支持 `title` / `date` / `tags` / `description` 四个字段，解�
 
 ## 相关笔记
 
-- [[on-stochastic-circuits|随机计算的一点笔记]]（含 Obsidian 语法演示）
+- [[blog-tour|博客功能展示]]（渲染管线全演示）
