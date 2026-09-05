@@ -71,7 +71,7 @@ useHead(() =>
       </p>
     </header>
 
-    <div class="terminal reveal">
+    <div class="terminal reveal gallery-image-term">
       <div class="terminal-bar">
         <span class="dot red"></span>
         <span class="dot yellow"></span>

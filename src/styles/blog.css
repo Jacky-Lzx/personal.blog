@@ -254,6 +254,10 @@
   border-radius: 8px;
   display: block;
 }
+/* 图片框与下方注释框之间的间距 */
+.gallery-image-term {
+  margin-bottom: 24px;
+}
 
 /* ============ 文章页 ============ */
 .post-head { margin-bottom: 22px; }
