@@ -1,0 +1,13 @@
+# For all settings see https://github.com/artempyanykh/marksman/blob/main/Tests/default.marksman.toml
+
+[code_action]
+# Enable/disable "Table of Contents" code action
+toc.enable = false
+
+# Enable/disable "Create missing linked file" code action
+create_missing_file.enable = false
+
+[completion]
+# 博客文章在 vault 顶层、按文件名解析 [[链接]]，
+# 所以用 "file-stem"（文件名不带扩展名）而不是 Note vault 的 "file-path-stem"
+wiki.style = "file-stem"
