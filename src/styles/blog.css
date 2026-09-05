@@ -392,10 +392,25 @@
   transform: rotate(45deg);
 }
 
+/* 图片卡片：卡片样式套在包裹 <img> 的段落上（invert 滤镜只作用于 img，衬底不会被翻转）。
+   ![](...) 由 marked 包进 <p>；![[...]] 独立行嵌入在 transformWikilinks 里同样包进 <p> */
+.post-body p:has(> img:only-child) {
+  padding: 10px;
+  border: 1px solid var(--surface0);
+  border-radius: 10px;
+  background: var(--base);
+  box-shadow: 0 2px 10px var(--shadow-color);
+}
 .post-body img {
   max-width: 100%;
-  border-radius: 8px;
-  border: 1px solid var(--surface0);
+  display: block;
+  margin: 0 auto;
+}
+/* 逐图配置：默认不翻转；黑线透明底的图（Inkscape 导出）需显式加 invert 才能在暗色主题下可见，
+   hue-rotate 保色相只翻明度。
+   写法：![[img|520|invert]] / ![[img|invert]] / ![alt|511|invert](src) / ![alt](src "invert") */
+:root:not([data-theme="latte"]) .post-body img.invert {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 /* 公式（KaTeX） */

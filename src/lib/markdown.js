@@ -115,9 +115,24 @@ marked.use({
 marked.use({
   renderer: {
     image({ href, title, tokens }) {
-      const alt = this.parser.parseInline(tokens || []).replace(/"/g, "&quot;");
+      let alt = this.parser.parseInline(tokens || []).replace(/"/g, "&quot;");
       const src = (activeCtx && activeCtx.resolveAttachment(href)) || href;
-      return `<img src="${src}" alt="${alt}"${title ? ` title="${title}"` : ""} loading="lazy">`;
+      // Obsidian 尺寸语法：![alt|300](src) / ![alt|300x200](src)（与 ![[img|300]] 一致）
+      // invert 配置（暗色主题下是否翻转颜色）：尾部 ![alt|300|no-invert](src)，或 title：![alt](src "no-invert")
+      let style = "";
+      let invertCls = "";
+      const sizeM = alt.match(/^(.*?)\|(\d+(?:\.\d+)?(?:x\d+(?:\.\d+)?)?)(?:px)?(?:\|(invert|no-invert))?$/);
+      if (sizeM) {
+        const [w, h] = sizeM[2].split("x");
+        style = ` style="width:${w}px${h ? `;height:${h}px` : ""}"`;
+        if (sizeM[3]) invertCls = ` ${sizeM[3]}`;
+        alt = sizeM[1];
+      }
+      if (!invertCls && /^(invert|no-invert)$/.test((title || "").trim())) {
+        invertCls = ` ${title.trim()}`;
+        title = "";
+      }
+      return `<img${invertCls ? ` class="${invertCls.trim()}"` : ""} src="${src}" alt="${alt}"${title ? ` title="${title}"` : ""}${style} loading="lazy">`;
     },
   },
 });

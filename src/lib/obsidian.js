@@ -105,7 +105,7 @@ function transformTags(text) {
 
 /* 双向链接：[[...]] 与嵌入 ![[...]] */
 function transformWikilinks(text, ctx) {
-  return text.replace(/(!?)\[\[([^\[\]\n]+?)\]\]/g, (m, bang, raw) => {
+  let out = text.replace(/(!?)\[\[([^\[\]\n]+?)\]\]/g, (m, bang, raw) => {
     const pipe = raw.indexOf("|");
     const targetPart = (pipe === -1 ? raw : raw.slice(0, pipe)).trim();
     const alias = pipe === -1 ? "" : raw.slice(pipe + 1).trim();
@@ -118,7 +118,21 @@ function transformWikilinks(text, ctx) {
       if (name && ctx.isImage(name)) {
         const url = ctx.resolveAttachment(name);
         if (url) {
-          return `<img class="embed-image" src="${url}" alt="${escapeHtml(alias || name)}" loading="lazy">`;
+          // Obsidian 尺寸语法：![[img|300]] / ![[img|300x200]]（纯数字才当尺寸，否则仍为 alias）
+          // invert 配置（暗色主题下是否翻转颜色）：![[img|300|no-invert]] / ![[img|no-invert]]
+          const sizeM = alias.match(/^(\d+(?:\.\d+)?(?:x\d+(?:\.\d+)?)?)(?:px)?(?:\|(invert|no-invert))?$/);
+          const flagOnly = /^(invert|no-invert)$/.test(alias);
+          let style = "";
+          let invertCls = "";
+          if (sizeM) {
+            const [w, h] = sizeM[1].split("x");
+            style = ` style="width:${w}px${h ? `;height:${h}px` : ""}"`;
+            if (sizeM[2]) invertCls = ` ${sizeM[2]}`;
+          } else if (flagOnly) {
+            invertCls = ` ${alias}`;
+          }
+          const altText = sizeM || flagOnly ? name : alias;
+          return `<img class="embed-image${invertCls}" src="${url}" alt="${escapeHtml(altText)}"${style} loading="lazy">`;
         }
         return `<span class="wikilink dangling" title="找不到附件 ${escapeHtml(name)}">![[${escapeHtml(raw)}]]</span>`;
       }
@@ -142,6 +156,10 @@ function transformWikilinks(text, ctx) {
     const label = alias || note.title;
     return `<a class="wikilink" href="${href}">${escapeHtml(label)}</a>`;
   });
+  // 独立行的图片嵌入包进 <p>：与 ![](...) 的 DOM 一致（卡片衬底套段落，invert 滤镜不会翻转它）；
+  // 行内（与文字同行）的嵌入保持裸 <img>
+  out = out.replace(/^<img class="embed-image[^\n>]*>$/gm, "<p>$&</p>");
+  return out;
 }
 
 /* 压掉空行（marked 的 HTML block 遇到空行会断开），但保留 <pre> 内的换行 */
