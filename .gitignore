@@ -4,3 +4,11 @@ scripts/.cache/
 .vite-ssg-temp/
 *.log
 .DS_Store
+
+# Obsidian vault（src/posts）：保留 app.json 等共享配置，忽略本地工作区缓存
+src/posts/.obsidian/workspace.json
+src/posts/.obsidian/workspace-mobile.json
+src/posts/.obsidian/cache
+src/posts/.obsidian/plugins
+src/posts/.obsidian/graph.json
+src/posts/.obsidian/appearance.json

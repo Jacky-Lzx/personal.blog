@@ -36,3 +36,7 @@ frontmatter 支持 `title` / `date` / `tags` / `description` 四个字段，解�
 > `❯ cat posts/hello-blog.md`
 
 后续可能加：RSS、代码块复制按钮、全文搜索。
+
+## 相关笔记
+
+- [[on-stochastic-circuits|随机计算的一点笔记]]（含 Obsidian 语法演示）

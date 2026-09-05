@@ -35,3 +35,18 @@ def random_bit_stream(value: float, n: int = 1024):
     import random
     return [1 if random.random() < value else 0 for _ in range(n)]
 ```
+
+## Obsidian 语法演示
+
+这篇仓库里的文章本身就是一个 Obsidian vault，以下语法在博客里都会生效：
+
+> [!tip] 双向链接
+> 在 Obsidian 里写 `[[你好，这是新的博客]]`，博客构建后就会变成真正的站内链接，
+> 并且那篇笔记底部的 backlinks 面板会反过来列出本文。
+
+- 双向链接：见 [[hello-blog|博客上线笔记]]
+- 标题锚点：见 [[on-stochastic-circuits#基本概念|本文的「基本概念」小节]]
+- 正文标签：#stochastic-computing
+
+> [!warning]- 折叠的 callout
+> 以 `-` 结尾的 callout 会渲染成可折叠的 `<details>`。

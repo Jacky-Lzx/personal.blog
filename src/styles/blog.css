@@ -288,6 +288,139 @@
   margin: 1.8em 0;
 }
 
+/* ============ Obsidian 语法：双向链接 / 嵌入 / callout / 标签 ============ */
+.post-body .wikilink {
+  color: var(--lavender);
+  text-decoration: none;
+  border-bottom: 1px dashed color-mix(in srgb, var(--lavender) 55%, transparent);
+  transition: color .2s, border-color .2s;
+}
+.post-body .wikilink:hover {
+  color: var(--mauve);
+  border-bottom-style: solid;
+  border-bottom-color: var(--mauve);
+}
+.post-body .wikilink.dangling {
+  color: var(--overlay1);
+  border-bottom: 1px dashed var(--surface2);
+  cursor: help;
+}
+
+.post-body .note-embed {
+  border: 1px solid var(--surface1);
+  border-left: 3px solid var(--mauve);
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--surface0) 35%, transparent);
+  font-family: var(--font-body);
+}
+.note-embed-title {
+  color: var(--lavender);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+}
+.note-embed-title:hover { color: var(--mauve); text-decoration: underline; }
+.note-embed-excerpt {
+  margin: 4px 0 0;
+  color: var(--subtext1);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.post-body .embed-image {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.post-body .callout {
+  border: 1px solid var(--surface1);
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--surface0) 30%, transparent);
+  font-family: var(--font-body);
+}
+.post-body .callout .callout-title {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  list-style: none;
+}
+.post-body .callout .callout-title::-webkit-details-marker { display: none; }
+.post-body .callout .callout-title span { margin-left: 6px; }
+.post-body .callout .callout-content > :first-child { margin-top: 0; }
+.post-body .callout .callout-content > :last-child { margin-bottom: 0; }
+.post-body .callout.is-collapsed .callout-content { padding-top: 4px; }
+
+.callout-note    { border-left: 3px solid var(--blue); }
+.callout-note .callout-title { color: var(--blue); }
+.callout-tip     { border-left: 3px solid var(--green); }
+.callout-tip .callout-title { color: var(--green); }
+.callout-info    { border-left: 3px solid var(--sapphire); }
+.callout-info .callout-title { color: var(--sapphire); }
+.callout-question{ border-left: 3px solid var(--peach); }
+.callout-question .callout-title { color: var(--peach); }
+.callout-warning { border-left: 3px solid var(--yellow); }
+.callout-warning .callout-title { color: var(--yellow); }
+.callout-danger,
+.callout-failure { border-left: 3px solid var(--red); }
+.callout-danger .callout-title,
+.callout-failure .callout-title { color: var(--red); }
+.callout-success { border-left: 3px solid var(--green); }
+.callout-success .callout-title { color: var(--green); }
+.callout-todo    { border-left: 3px solid var(--teal); }
+.callout-todo .callout-title { color: var(--teal); }
+.callout-example { border-left: 3px solid var(--mauve); }
+.callout-example .callout-title { color: var(--mauve); }
+.callout-quote   { border-left: 3px solid var(--overlay1); }
+.callout-quote .callout-title { color: var(--overlay1); }
+.callout-bug     { border-left: 3px solid var(--maroon); }
+.callout-bug .callout-title { color: var(--maroon); }
+
+.post-body .inline-tag {
+  display: inline;
+  padding: 0 5px;
+  font-size: 12px;
+  text-decoration: none;
+}
+.post-body .inline-tag:hover { text-decoration: underline; background: var(--surface1); }
+
+/* 标题锚点链接（客户端注入） */
+.post-body h2, .post-body h3 { scroll-margin-top: 70px; }
+.post-body .anchor-link {
+  margin-left: 8px;
+  color: var(--overlay1);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity .15s, color .15s;
+}
+.post-body h2:hover .anchor-link,
+.post-body h3:hover .anchor-link { opacity: 1; }
+.post-body .anchor-link:hover { color: var(--mauve); }
+
+/* ============ 反向链接面板 ============ */
+.backlinks { margin-top: 22px; }
+.backlink-list { list-style: none; }
+.backlink-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  transition: background .15s;
+}
+.backlink-row + .backlink-row { border-top: 1px dashed var(--surface0); }
+.backlink-row:hover { background: var(--surface0); }
+.backlink-title {
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  text-decoration: none;
+  transition: color .2s;
+}
+.backlink-title:hover { color: var(--mauve); text-decoration: underline; }
+
 /* ============ 文章翻页导航 ============ */
 .post-nav {
   display: grid;

@@ -2,6 +2,14 @@ import { marked } from "marked";
 import { markedHighlight } from "marked-highlight";
 import hljs from "highlight.js/lib/common";
 import { parseFrontmatter } from "./frontmatter";
+import { anchorFor, transformObsidian } from "./obsidian";
+
+/*
+ * 文章源 = Obsidian vault（src/posts/）。
+ * - 顶层 *.md 发布为博客文章（/posts/<文件名>）
+ * - 子文件夹中的 *.md 只参与 [[链接]] 解析（草稿），不发布
+ * - attachments/ 下的文件可作为 ![[...]] 嵌入或普通 Markdown 图片引用
+ */
 
 /* 代码高亮（highlight.js 常用语言子集，控制包体积） */
 marked.use(
@@ -16,17 +24,39 @@ marked.use(
   })
 );
 
+/* 标题加锚点 id（与 obsidian.js 的 anchorFor 保持一致），供 [[note#标题]] 跳转 */
+marked.use({
+  renderer: {
+    heading({ tokens, depth }) {
+      const text = this.parser.parseInline(tokens);
+      return `<h${depth} id="${anchorFor(text)}">${text}</h${depth}>\n`;
+    },
+  },
+});
+
+/* 图片 src 重写：vault 相对路径（attachments/...）→ 构建产物 URL */
+const imageRenderer = {
+  image({ href, title, text, tokens }) {
+    const alt = this.parser.parseInline(tokens || []).replace(/"/g, "&quot;");
+    const src = resolveAttachment(href) || href;
+    return `<img src="${src}" alt="${alt}"${title ? ` title="${title}"` : ""} loading="lazy">`;
+  },
+};
+
 /* 取正文第一个非空段落作为摘要 */
 function excerptOf(body) {
   const line = body
     .split(/\r?\n/)
     .map((l) => l.trim())
-    .find((l) => l && !/^#/.test(l) && !/^-{3,}$/.test(l) && !/^```/.test(l));
+    .find((l) => l && !/^#/.test(l) && !/^-{3,}$/.test(l) && !/^```/.test(l) && !/^>\s*\[!/.test(l));
   if (!line) return "";
   return line
+    .replace(/!\[\[[^\]]*\]\]/g, "")
+    .replace(/\[\[([^\]|]*)(?:\|([^\]]*))?\]\]/g, (_, a, b) => b || a)
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
     .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/[*`>#]/g, "")
+    .trim()
     .slice(0, 140);
 }
 
@@ -36,27 +66,121 @@ export function readingTimeOf(body) {
   return Math.max(1, Math.round(chars / 400));
 }
 
-const rawModules = import.meta.glob("../posts/*.md", {
+/* 附件索引：attachments/ 下的文件 → 构建产物 URL */
+marked.use({ renderer: imageRenderer });
+
+const attachmentFiles = import.meta.glob("../posts/attachments/**/*", {
+  query: "?url",
+  import: "default",
+  eager: true,
+});
+const attachments = {};
+for (const [p, url] of Object.entries(attachmentFiles)) {
+  const rel = p.replace("../posts/", "");
+  const base = rel.split("/").pop();
+  if (base.startsWith(".")) continue;
+  if (!(rel in attachments)) attachments[rel] = url;
+  if (!(base in attachments)) attachments[base] = url;
+}
+
+const IMAGE_EXT = /\.(png|jpe?g|gif|webp|svg|avif|bmp|ico)$/i;
+const isImage = (name) => IMAGE_EXT.test(name);
+const resolveAttachment = (name) => {
+  const n = name.replace(/^\.\//, "").replace(/^attachments\//, "attachments/");
+  return (
+    attachments[n] ||
+    attachments[n.replace(/^attachments\//, "")] ||
+    attachments[n.split("/").pop()] ||
+    null
+  );
+};
+
+/* 先解析所有笔记（含子文件夹草稿），建立 [[链接]] 索引 */
+const allNotes = import.meta.glob("../posts/**/*.md", {
   query: "?raw",
   import: "default",
   eager: true,
 });
 
-export const posts = Object.entries(rawModules)
-  .map(([path, raw]) => {
-    const slug = path.split("/").pop().replace(/\.md$/, "");
-    const { meta, body } = parseFrontmatter(raw);
-    return {
-      slug,
-      title: meta.title || slug,
-      date: meta.date || "1970-01-01",
-      tags: Array.isArray(meta.tags) ? meta.tags : meta.tags ? [meta.tags] : [],
-      description: meta.description || excerptOf(body),
-      html: marked.parse(body),
-      readingTime: readingTimeOf(body),
-    };
-  })
+const notes = Object.entries(allNotes).map(([path, raw]) => {
+  const file = path.split("/").pop();
+  const isTopLevel = !path.slice("../posts/".length).includes("/");
+  const { meta, body } = parseFrontmatter(raw);
+  const title = typeof meta.title === "string" && meta.title ? meta.title : file.replace(/\.md$/, "");
+  return {
+    slug: isTopLevel ? file.replace(/\.md$/, "") : null,
+    raw,
+    body,
+    title,
+    date: meta.date != null && meta.date !== "" ? String(meta.date) : "1970-01-01",
+    tags: normalizeList(meta.tags),
+    aliases: normalizeList(meta.aliases),
+    description: typeof meta.description === "string" ? meta.description : "",
+  };
+});
+
+function normalizeList(v) {
+  if (Array.isArray(v)) return v.map(String).filter(Boolean);
+  if (typeof v === "string" && v) return v.split(/[,，]/).map((s) => s.trim()).filter(Boolean);
+  return [];
+}
+
+/* [[链接]] 按 文件名 / 标题 / aliases 解析（不区分大小写） */
+const noteIndex = new Map();
+const indexNote = (key, note) => {
+  const k = String(key).trim().toLowerCase();
+  if (k && !noteIndex.has(k)) noteIndex.set(k, note);
+};
+for (const n of notes) {
+  if (n.slug) indexNote(n.slug, n);
+  indexNote(n.title, n);
+  n.aliases.forEach((a) => indexNote(a, n));
+}
+const resolveNote = (name) => noteIndex.get(String(name).trim().toLowerCase()) || null;
+
+const noteHref = (note, hash) =>
+  `/posts/${note.slug}` + (hash && !hash.includes("^") ? `#${anchorFor(hash)}` : "");
+
+/* Obsidian 语法转换上下文 */
+const ctx = {
+  resolveNote,
+  noteHref,
+  isImage,
+  resolveAttachment,
+  renderMarkdown: (text) => marked.parse(transformObsidian(text, ctx)),
+};
+
+/* 渲染发布的文章（顶层笔记） */
+export const posts = notes
+  .filter((n) => n.slug)
+  .map((n) => ({
+    slug: n.slug,
+    title: n.title,
+    date: n.date,
+    tags: n.tags,
+    description: n.description || excerptOf(n.body),
+    excerpt: excerptOf(n.body),
+    html: marked.parse(transformObsidian(n.body, ctx)),
+    readingTime: readingTimeOf(n.body),
+    backlinks: [],
+  }))
   .sort((a, b) => b.date.localeCompare(a.date));
+
+/* 反向链接：扫描其他文章正文中指向本文的 [[链接]] */
+const bySlug = new Map(posts.map((p) => [p.slug, p]));
+for (const n of notes) {
+  if (!n.slug) continue;
+  const fromPost = bySlug.get(n.slug);
+  for (const m of n.body.matchAll(/\[\[([^\[\]\n]+?)\]\]/g)) {
+    const name = m[1].split("|")[0].split("#")[0].trim();
+    const hit = resolveNote(name);
+    // hit 是 n 链接指向的文章；把 n 记为 hit 的反向链接
+    const hitPost = hit && hit.slug ? bySlug.get(hit.slug) : null;
+    if (hitPost && hitPost.slug !== n.slug && !hitPost.backlinks.includes(fromPost)) {
+      hitPost.backlinks.push(fromPost);
+    }
+  }
+}
 
 export const postBySlug = (slug) => posts.find((p) => p.slug === slug);
 
