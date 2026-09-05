@@ -309,6 +309,38 @@
   font-size: 12.8px;
   line-height: 1.7;
 }
+/* 带语言标签的代码块：外框移到包裹层，pre 去掉自己的边框 */
+.post-body .code-block {
+  margin: 1.1em 0;
+  border: 1px solid var(--surface0);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.post-body .code-block__lang {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--subtext1);
+  background: var(--surface0);
+  padding: 4px 16px;
+  border-bottom: 1px solid var(--surface0);
+  user-select: none;
+}
+.post-body .code-block__icon {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  fill: currentColor;
+  color: var(--subtext0);
+}
+.post-body .code-block pre {
+  border: none;
+  border-radius: 0;
+  margin: 0;
+}
 .post-body pre code {
   background: none;
   padding: 0;
