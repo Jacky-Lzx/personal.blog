@@ -128,6 +128,8 @@
 .t-comment { color: var(--overlay0); }
 .t-error   { color: var(--red); }
 .t-ok      { color: var(--green); font-family: var(--font-mono); }
+.terminal a { text-decoration: none; }
+.terminal a:hover { text-decoration: underline; }
 
 /* ============ 文章列表 ============ */
 .cmd-line { margin-bottom: 10px; }
