@@ -38,7 +38,10 @@ function initReveal() {
         }
       });
     },
-    { threshold: 0.12 },
+    /* threshold 必须为 0：threshold 是相对元素自身高度的可见比例，
+       长文的 .terminal 总高超过视口的 1/threshold 倍后就永远达不到阈值，
+       会停在 opacity:0。0 = 任意像素进入视口即触发 */
+    { threshold: 0 },
   );
   const observeAll = () =>
     document.querySelectorAll(".reveal:not(.visible)").forEach((el) => observer.observe(el));
