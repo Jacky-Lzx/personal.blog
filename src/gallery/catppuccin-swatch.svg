@@ -1,45 +1,70 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" role="img" aria-label="配色卡">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" role="img" aria-label="Catppuccin 双主题配色卡">
+  <defs>
+    <!-- 分隔线左侧（Latte 一侧）的裁剪区域 -->
+    <clipPath id="left-of-slash">
+      <polygon points="0,0 1348,0 304,1200 0,1200"/>
+    </clipPath>
+  </defs>
+
+  <!-- 背景：左白（Latte）/ 右深（Mocha） -->
   <rect width="1600" height="1200" fill="#11111b"/>
-  <text x="80" y="120" font-family="monospace" font-size="48" fill="#cdd6f4">Catppuccin Mocha</text>
-  <text x="80" y="170" font-family="monospace" font-size="28" fill="#7f849c"># 博客双主题的调色板</text>
+  <polygon points="0,0 1348,0 304,1200 0,1200" fill="#ffffff"/>
+
+  <text x="80" y="120" font-family="monospace" font-size="48" fill="#4c4f69">Catppuccin Latte</text>
+  <text x="80" y="170" font-family="monospace" font-size="28" fill="#6c6f85"># 博客双主题的调色板</text>
+  <text x="1520" y="1120" text-anchor="end" font-family="monospace" font-size="48" fill="#cdd6f4">Catppuccin Mocha</text>
+
   <g font-family="monospace" font-size="26">
     <!-- row 1 -->
-    <rect x="80"  y="240" width="280" height="160" rx="14" fill="#1e1e2e" stroke="#45475a"/>
-    <rect x="380" y="240" width="280" height="160" rx="14" fill="#181825" stroke="#45475a"/>
-    <rect x="680" y="240" width="280" height="160" rx="14" fill="#11111b" stroke="#45475a"/>
-    <rect x="980" y="240" width="280" height="160" rx="14" fill="#313244" stroke="#45475a"/>
+    <rect x="80"  y="240" width="280" height="160" rx="14" fill="#eff1f5" stroke="#cfd8e3"/>
+    <rect x="380" y="240" width="280" height="160" rx="14" fill="#e6e9ef" stroke="#cfd8e3"/>
+    <rect x="680" y="240" width="280" height="160" rx="14" fill="#dcddd4" stroke="#cfd8e3"/>
+    <!-- surface0：被线穿过，左 Latte / 右 Mocha -->
+    <rect x="980" y="240" width="280" height="160" rx="14" fill="#313244"/>
+    <rect x="980" y="240" width="280" height="160" rx="14" fill="#e6e9ef" clip-path="url(#left-of-slash)"/>
+    <rect x="980" y="240" width="280" height="160" rx="14" fill="none" stroke="#585b70"/>
     <rect x="1280" y="240" width="280" height="160" rx="14" fill="#45475a" stroke="#585b70"/>
     <!-- row 2 -->
-    <rect x="80"  y="440" width="280" height="160" rx="14" fill="#cba6f7"/>
-    <rect x="380" y="440" width="280" height="160" rx="14" fill="#f38ba8"/>
+    <rect x="80"  y="440" width="280" height="160" rx="14" fill="#8839ef"/>
+    <rect x="380" y="440" width="280" height="160" rx="14" fill="#d20f39"/>
+    <!-- peach：被线穿过，左 Latte / 右 Mocha -->
     <rect x="680" y="440" width="280" height="160" rx="14" fill="#fab387"/>
+    <rect x="680" y="440" width="280" height="160" rx="14" fill="#fe640b" clip-path="url(#left-of-slash)"/>
     <rect x="980" y="440" width="280" height="160" rx="14" fill="#f9e2af"/>
     <rect x="1280" y="440" width="280" height="160" rx="14" fill="#a6e3a1"/>
     <!-- row 3 -->
-    <rect x="80"  y="640" width="280" height="160" rx="14" fill="#94e2d5"/>
+    <rect x="80"  y="640" width="280" height="160" rx="14" fill="#179299"/>
+    <!-- sky：被线穿过，左 Latte / 右 Mocha -->
     <rect x="380" y="640" width="280" height="160" rx="14" fill="#89dceb"/>
+    <rect x="380" y="640" width="280" height="160" rx="14" fill="#04a5e5" clip-path="url(#left-of-slash)"/>
+    <!-- blue：被线穿过，左 Latte / 右 Mocha -->
     <rect x="680" y="640" width="280" height="160" rx="14" fill="#89b4fa"/>
+    <rect x="680" y="640" width="280" height="160" rx="14" fill="#1e66f5" clip-path="url(#left-of-slash)"/>
     <rect x="980" y="640" width="280" height="160" rx="14" fill="#b4befe"/>
     <rect x="1280" y="640" width="280" height="160" rx="14" fill="#f5c2e7"/>
   </g>
-  <g font-family="monospace" font-size="24" fill="#11111b">
-    <text x="100" y="555">mauve</text>
-    <text x="400" y="555">red</text>
-    <text x="700" y="555">peach</text>
-    <text x="1000" y="555">yellow</text>
-    <text x="1300" y="555">green</text>
-    <text x="100" y="755">teal</text>
-    <text x="400" y="755">sky</text>
-    <text x="700" y="755">blue</text>
-    <text x="1000" y="755">lavender</text>
-    <text x="1300" y="755">pink</text>
+
+  <!-- 标签：位于各色卡右下角 -->
+  <g font-family="monospace" font-size="24" fill="#11111b" text-anchor="end">
+    <text x="340"  y="380">base</text>
+    <text x="640"  y="380">mantle</text>
+    <text x="940"  y="380">crust</text>
+    <text x="340"  y="580">mauve</text>
+    <text x="640"  y="580">red</text>
+    <text x="940"  y="580">peach</text>
+    <text x="1240" y="580">yellow</text>
+    <text x="1540" y="580">green</text>
+    <text x="340"  y="780">teal</text>
+    <text x="640"  y="780">sky</text>
+    <text x="940"  y="780">blue</text>
+    <text x="1240" y="780">lavender</text>
+    <text x="1540" y="780">pink</text>
   </g>
-  <g font-family="monospace" font-size="24" fill="#cdd6f4">
-    <text x="100" y="370">base</text>
-    <text x="400" y="370">mantle</text>
-    <text x="700" y="370">crust</text>
-    <text x="1000" y="370">surface0</text>
-    <text x="1300" y="370">surface1</text>
+  <g font-family="monospace" font-size="24" fill="#cdd6f4" text-anchor="end">
+    <text x="1240" y="380">surface0</text>
+    <text x="1540" y="380">surface1</text>
   </g>
-  <text x="80" y="920" font-family="monospace" font-size="26" fill="#7f849c"># 快捷键 t：Mocha ⇄ Latte</text>
+
+  <!-- 分隔线宽度为 0：只靠背景与色卡的切分体现左 Latte / 右 Mocha，不画可见线 -->
+  <line x1="304" y1="1200" x2="1348" y2="0" stroke="none" stroke-width="0"/>
 </svg>
