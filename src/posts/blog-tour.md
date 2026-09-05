@@ -83,6 +83,10 @@ $$
 
 ![[catppuccin-swatch.svg]]
 
+- 画廊图片：文章可以直接嵌入 `gallery/` 里的图，写 `![[gallery/文件名]]` 或 `![[文件名]]`（同名时 `attachments/` 优先）
+
+![[gallery/mountain-lines.svg]]
+
 - 笔记嵌入：`![[hello-blog]]` 渲染成内嵌卡片
 
 ![[hello-blog]]

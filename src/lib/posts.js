@@ -7,6 +7,7 @@ import postDates from "virtual:post-dates";
  * - 顶层 *.md 发布为博客文章（/posts/<文件名>）
  * - 子文件夹中的 *.md 只参与 [[链接]] 解析（草稿），不发布
  * - attachments/ 下的文件可作为 ![[...]] 嵌入或普通 Markdown 图片引用
+ * - src/gallery/ 的图片同样可嵌入：![[gallery/...]] 或 ![[文件名]]（同名时 attachments 优先）
  */
 
 /* 取正文第一个非空段落作为摘要 */
@@ -47,6 +48,21 @@ for (const [p, url] of Object.entries(attachmentFiles)) {
   if (!(base in attachments)) attachments[base] = url;
 }
 
+/* 画廊图片索引（src/gallery/，与 lib/gallery.js 同一组扩展名）：
+   文章里可用 ![[gallery/a/b.svg]]、![[a/b.svg]] 或 ![[b.svg]] 引用 */
+const galleryImageFiles = import.meta.glob(
+  "../gallery/**/*.{png,jpg,jpeg,gif,webp,svg,avif,bmp}",
+  { query: "?url", import: "default", eager: true }
+);
+const galleryImages = {};
+for (const [p, url] of Object.entries(galleryImageFiles)) {
+  const rel = p.replace("../", ""); // "gallery/a/b.svg"
+  const base = rel.split("/").pop();
+  if (base.startsWith(".")) continue;
+  if (!(rel in galleryImages)) galleryImages[rel] = url;
+  if (!(base in galleryImages)) galleryImages[base] = url;
+}
+
 const IMAGE_EXT = /\.(png|jpe?g|gif|webp|svg|avif|bmp|ico)$/i;
 const isImage = (name) => IMAGE_EXT.test(name);
 const resolveAttachment = (name) => {
@@ -55,6 +71,8 @@ const resolveAttachment = (name) => {
     attachments[n] ||
     attachments[n.replace(/^attachments\//, "")] ||
     attachments[n.split("/").pop()] ||
+    galleryImages[n] ||
+    galleryImages[n.split("/").pop()] ||
     null
   );
 };

@@ -72,7 +72,7 @@ description: 一句话摘要（缺省时自动取正文首段）
 | `[[笔记\|显示文字]]`                                                                                        | 自定义链接文字                                                |
 | `[[笔记#标题]]`                                                                                             | 跳转到目标文章的小节（标题悬停可见 ¶ 锚点）                   |
 | `![[笔记]]`                                                                                                 | 内嵌笔记卡片（标题 + 摘要）                                   |
-| `![[图片.png]]`                                                                                             | 嵌入 `attachments/` 中的图片                                  |
+| `![[图片.png]]`                                                                                             | 嵌入 `attachments/` 中的图片；也可引用画廊：`![[gallery/图片.svg]]` 或 `![[图片.svg]]`（同名时 `attachments/` 优先） |
 | `> [!note] 标题`（tip/info/warning/danger/question/example/quote/todo/bug/success/failure，`-` 结尾可折叠） | 提示框（callout）                                             |
 | 正文中的 `#标签`                                                                                            | 链接到 `/tags/<标签>`                                         |
 | `$...$` / `$$...$$`                                                                                         | KaTeX 公式（行内 / 块级），callout 内同样生效，代码块内不解析 |
