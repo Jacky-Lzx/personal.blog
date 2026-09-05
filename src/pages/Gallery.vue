@@ -29,7 +29,7 @@ useHead(() => ({
          需要空格的相邻 span 把空格写在 span 内部（如 " ls" / " #"） -->
     <p class="hero-line">
       <span class="t-prompt">❯</span>
-      <span class="t-cmd"> ls</span>
+      <span class="t-cmd">ls </span>
       <span class="t-key">gallery/</span>
       <span v-if="tag">
         <span class="t-key"> --tag</span> <span class="t-val">{{ tag }}</span>
