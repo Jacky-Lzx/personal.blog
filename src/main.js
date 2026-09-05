@@ -2,6 +2,7 @@ import { ViteSSG } from "vite-ssg";
 import App from "./App.vue";
 import { routes } from "./routes";
 import { posts } from "./lib/posts";
+import { galleryItems } from "./lib/gallery";
 import "./styles/variables.css";
 import "./styles/base.css";
 import "./styles/blog.css";
@@ -35,5 +36,6 @@ export function includedRoutes(paths) {
   return [
     ...paths.filter((p) => !p.includes(":") && !p.includes("*")),
     ...posts.map((p) => `/posts/${p.slug}`),
+    ...galleryItems.map((i) => `/gallery/image/${encodeURIComponent(i.id)}`),
   ];
 }

@@ -1,4 +1,5 @@
 import { allTags } from "./lib/posts";
+import { allGalleryTags } from "./lib/gallery";
 
 const SITE = "李泽玺的博客";
 
@@ -15,6 +16,32 @@ export const routes = [
     path: "/posts/:slug",
     component: () => import("./pages/Post.vue"),
     meta: { title: SITE },
+  },
+  {
+    name: "gallery",
+    path: "/gallery",
+    component: () => import("./pages/Gallery.vue"),
+    meta: {
+      title: `画廊 · ${SITE}`,
+      description: "按标签分类的图片画廊",
+    },
+  },
+  // 每个画廊标签一个显式静态路由
+  ...allGalleryTags.map((t) => ({
+    name: `gallery-${t.tag}`,
+    path: `/gallery/${encodeURIComponent(t.tag)}`,
+    component: () => import("./pages/Gallery.vue"),
+    meta: {
+      title: `画廊 #${t.tag} · ${SITE}`,
+      description: `标签 ${t.tag} 下的图片`,
+    },
+  })),
+  // 单张图片详情（动态路由，具体路径在 main.js 的 includedRoutes 中预渲染）
+  {
+    name: "gallery-item",
+    path: "/gallery/image/:id",
+    component: () => import("./pages/GalleryItem.vue"),
+    meta: { title: `画廊 · ${SITE}` },
   },
   {
     name: "tags",

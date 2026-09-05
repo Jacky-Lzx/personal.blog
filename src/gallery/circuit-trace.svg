@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" role="img" aria-label="电路走线">
+  <rect width="1600" height="1200" fill="#11111b"/>
+  <g fill="none" stroke="#45475a" stroke-width="10" stroke-linecap="round">
+    <path d="M120 160 H520 Q560 160 560 200 V420"/>
+    <path d="M1480 200 H1080 Q1040 200 1040 240 V420"/>
+    <path d="M200 1040 H620 Q660 1040 660 1000 V820"/>
+    <path d="M1400 1000 H980 Q940 1000 940 960 V820"/>
+    <path d="M120 600 H360 Q400 600 400 640 V760"/>
+    <path d="M1480 620 H1240 Q1200 620 1200 660 V760"/>
+  </g>
+  <g fill="none" stroke="#a6e3a1" stroke-width="10" stroke-linecap="round">
+    <path d="M560 420 V620 Q560 660 600 660 H700"/>
+    <path d="M900 660 H1000 Q1040 660 1040 620 V420"/>
+    <path d="M660 820 V760"/>
+    <path d="M940 820 V760"/>
+  </g>
+  <g fill="none" stroke="#89b4fa" stroke-width="10" stroke-linecap="round">
+    <path d="M400 760 V640"/>
+    <path d="M1200 760 V640 Q1200 620 1160 620 H1100"/>
+  </g>
+  <g>
+    <rect x="700" y="560" width="200" height="200" rx="14" fill="#1e1e2e" stroke="#585b70" stroke-width="6"/>
+    <rect x="748" y="608" width="104" height="104" rx="8" fill="#181825" stroke="#cba6f7" stroke-width="5"/>
+    <text x="800" y="670" text-anchor="middle" font-family="monospace" font-size="30" fill="#cba6f7">U1</text>
+    <g fill="#f9e2af">
+      <rect x="712" y="580" width="18" height="18"/>
+      <rect x="870" y="580" width="18" height="18"/>
+      <rect x="712" y="742" width="18" height="18"/>
+      <rect x="870" y="742" width="18" height="18"/>
+    </g>
+  </g>
+  <g fill="#1e1e2e" stroke="#585b70" stroke-width="5">
+    <circle cx="560" cy="160" r="20"/>
+    <circle cx="1040" cy="160" r="20" transform="translate(0,40)"/>
+    <circle cx="120" cy="160" r="20"/>
+    <circle cx="1480" cy="200" r="20"/>
+    <circle cx="200" cy="1040" r="20"/>
+    <circle cx="1400" cy="1000" r="20"/>
+    <circle cx="120" cy="600" r="20"/>
+    <circle cx="1480" cy="620" r="20"/>
+    <circle cx="400" cy="760" r="20"/>
+    <circle cx="1200" cy="760" r="20"/>
+  </g>
+  <g fill="#a6e3a1">
+    <circle cx="800" cy="420" r="10"/>
+    <circle cx="800" cy="900" r="10"/>
+  </g>
+  <text x="660" y="530" font-family="monospace" font-size="26" fill="#89dceb">CLK</text>
+  <text x="1060" y="530" font-family="monospace" font-size="26" fill="#89dceb">DOUT</text>
+</svg>

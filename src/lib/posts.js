@@ -158,6 +158,9 @@ const ctx = {
   renderMarkdown: (text) => marked.parse(transformObsidian(text, ctx)),
 };
 
+/* 供其他模块（如画廊注释）复用的完整渲染管线 */
+export const renderMarkdown = (text) => marked.parse(transformObsidian(text, ctx));
+
 /* 渲染发布的文章（顶层笔记） */
 export const posts = notes
   .filter((n) => n.slug)

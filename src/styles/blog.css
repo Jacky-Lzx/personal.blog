@@ -191,6 +191,68 @@
 .tag-link:hover .tag-name { text-decoration: underline; }
 .tag-count { color: var(--overlay1); font-size: 12px; }
 
+/* ============ 画廊 ============ */
+.chip { display: inline-block; transition: background .15s, color .15s; }
+.chip.active { background: var(--surface1); color: var(--text); }
+.gallery-chips { margin-bottom: 16px; }
+.gallery-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px;
+}
+.gallery-card-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--surface0);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--mantle);
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+.gallery-card-link:hover {
+  border-color: var(--mauve);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px var(--shadow-color);
+}
+.gallery-card-link img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+.gallery-card-body {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+}
+.gallery-card-title {
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gallery-card-link:hover .gallery-card-title { color: var(--mauve); }
+.gallery-card-meta {
+  color: var(--overlay0);
+  font-size: 11.5px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.gallery-full {
+  max-width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
 /* ============ 文章页 ============ */
 .post-head { margin-bottom: 22px; }
 .post-title-h1 { font-size: 28px; letter-spacing: .5px; margin-bottom: 10px; }
@@ -510,6 +572,7 @@
   .post-tags { justify-content: flex-start; }
   .post-nav { grid-template-columns: 1fr; }
   .post-nav-link.next { text-align: left; }
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
 }
 
 /* ============ highlight.js（Catppuccin 主题，随亮/暗切换） ============ */

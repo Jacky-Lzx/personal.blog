@@ -41,13 +41,16 @@ const link = (path) => {
         <RouterLink to="/tags" class="nav-link" :class="{ active: link('/tags') }">
           <span class="nav-ind"><span class="nav-num">2</span></span>标签
         </RouterLink>
+        <RouterLink to="/gallery" class="nav-link" :class="{ active: link('/gallery') }">
+          <span class="nav-ind"><span class="nav-num">3</span></span>画廊
+        </RouterLink>
         <a
           href="https://jacky-lzx.github.io"
           class="nav-link"
           target="_blank"
           rel="noopener"
         >
-          <span class="nav-ind"><span class="nav-num">3</span></span>主页
+          <span class="nav-ind"><span class="nav-num">4</span></span>主页
           <span class="nav-ext" aria-hidden="true">↗</span>
         </a>
       </div>

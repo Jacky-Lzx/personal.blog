@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" role="img" aria-label="线框山景">
+  <rect width="1600" height="1200" fill="#1e1e2e"/>
+  <circle cx="1200" cy="300" r="120" fill="#f9e2af" opacity="0.9"/>
+  <g fill="none" stroke-width="4">
+    <path d="M0 760 L260 480 L420 640 L640 380 L860 700 L1080 460 L1300 660 L1600 420" stroke="#f5c2e7"/>
+    <path d="M0 840 L300 560 L520 720 L760 470 L980 780 L1240 540 L1600 760" stroke="#cba6f7"/>
+    <path d="M0 940 L240 700 L480 840 L720 620 L1000 880 L1320 680 L1600 880" stroke="#89b4fa"/>
+    <path d="M0 1040 L320 820 L600 940 L880 760 L1160 980 L1440 820 L1600 960" stroke="#89dceb"/>
+    <path d="M0 1140 L280 980 L560 1080 L900 920 L1240 1100 L1600 1000" stroke="#94e2d5"/>
+  </g>
+  <g fill="#f9e2af" opacity="0.6">
+    <circle cx="180" cy="180" r="3"/>
+    <circle cx="380" cy="120" r="2.5"/>
+    <circle cx="700" cy="200" r="3"/>
+    <circle cx="960" cy="120" r="2.2"/>
+    <circle cx="1420" cy="200" r="2.8"/>
+  </g>
+</svg>

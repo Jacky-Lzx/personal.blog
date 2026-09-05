@@ -85,19 +85,45 @@ description: 一句话摘要（缺省时自动取正文首段）
 - 为每个标签生成 `/tags/<tag>` 页面
 - 生成 `dist/404.html`（GitHub Pages 自动兜底）
 
+## 画廊
+
+`src/gallery/` 放图片，构建时生成 `/gallery` 页面（导航栏「3 画廊」）：
+
+- 图片支持 `png/jpg/jpeg/gif/webp/svg/avif/bmp`，可放子文件夹
+- 每张图可配一份**注释笔记**：与图片同目录、同名的 `.md` 文件（Obsidian 惯例，
+  `sunset.svg` 的注释写在 `sunset.svg.md`），支持 frontmatter + 与文章相同的
+  Obsidian 语法（wikilink/callout/`#tag`）：
+
+  ```markdown
+  ---
+  title: 像素日落
+  tags:
+    - 风景
+  date: 2026-06-12
+  description: 一句话描述（用于图片页 SEO）
+  ---
+
+  对这张图片的注释……
+  ```
+
+- 没有注释笔记的图片仍然会出现在画廊里（显示「暂无注释」），标签缺省为无
+- 页面结构：`/gallery`（全部）→ `/gallery/<标签>`（按标签筛选）→ `/gallery/image/<图片>`（大图 + 注释 + 上一张/下一张），全部预渲染为静态 HTML
+
 ## 目录结构
 
 ```
 src/
 ├── main.js          # vite-ssg 入口
-├── routes.js        # 静态路由（文章/标签路由由 posts 自动生成）
+├── routes.js        # 静态路由（文章/标签/画廊路由由数据自动生成）
 ├── lib/
 │   ├── posts.js         # 加载 md、解析、生成 posts/allTags/backlinks
 │   ├── frontmatter.js   # 迷你 YAML frontmatter 解析器
-│   └── obsidian.js      # Obsidian 语法预处理（wikilink/嵌入/callout/#tag）
-├── pages/           # Home / Post / Tags / Tag / NotFound
+│   ├── obsidian.js      # Obsidian 语法预处理（wikilink/嵌入/callout/#tag）
+│   └── gallery.js       # 画廊：图片 + 同名 .md 注释笔记 → galleryItems/allGalleryTags
+├── pages/           # Home / Post / Tags / Tag / Gallery / GalleryItem / NotFound
 ├── components/      # AppNav / PostList / Footer
 ├── posts/           # Obsidian vault：顶层 *.md 发布，attachments/ 存附件
+├── gallery/         # 画廊图片 + <文件名>.md 注释笔记（可选）
 └── styles/          # variables/base 移植自 homepage + blog.css
 ```
 

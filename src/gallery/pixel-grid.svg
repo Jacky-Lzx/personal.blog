@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" role="img" aria-label="像素格">
+  <rect width="1600" height="1200" fill="#181825"/>
+  <g>
+    <!-- 8x6 像素格，单元格 160，留白 12，起点 (160,240) -->
+    <g fill="#313244">
+      <rect x="160"  y="240" width="148" height="148" rx="10"/><rect x="328"  y="240" width="148" height="148" rx="10"/><rect x="496"  y="240" width="148" height="148" rx="10"/><rect x="664"  y="240" width="148" height="148" rx="10"/><rect x="832"  y="240" width="148" height="148" rx="10"/><rect x="1000" y="240" width="148" height="148" rx="10"/><rect x="1168" y="240" width="148" height="148" rx="10"/><rect x="1336" y="240" width="148" height="148" rx="10"/>
+      <rect x="160"  y="408" width="148" height="148" rx="10"/><rect x="328"  y="408" width="148" height="148" rx="10"/><rect x="496"  y="408" width="148" height="148" rx="10"/><rect x="664"  y="408" width="148" height="148" rx="10"/><rect x="832"  y="408" width="148" height="148" rx="10"/><rect x="1000" y="408" width="148" height="148" rx="10"/><rect x="1168" y="408" width="148" height="148" rx="10"/><rect x="1336" y="408" width="148" height="148" rx="10"/>
+      <rect x="160"  y="576" width="148" height="148" rx="10"/><rect x="328"  y="576" width="148" height="148" rx="10"/><rect x="496"  y="576" width="148" height="148" rx="10"/><rect x="664"  y="576" width="148" height="148" rx="10"/><rect x="832"  y="576" width="148" height="148" rx="10"/><rect x="1000" y="576" width="148" height="148" rx="10"/><rect x="1168" y="576" width="148" height="148" rx="10"/><rect x="1336" y="576" width="148" height="148" rx="10"/>
+      <rect x="160"  y="744" width="148" height="148" rx="10"/><rect x="328"  y="744" width="148" height="148" rx="10"/><rect x="496"  y="744" width="148" height="148" rx="10"/><rect x="664"  y="744" width="148" height="148" rx="10"/><rect x="832"  y="744" width="148" height="148" rx="10"/><rect x="1000" y="744" width="148" height="148" rx="10"/><rect x="1168" y="744" width="148" height="148" rx="10"/><rect x="1336" y="744" width="148" height="148" rx="10"/>
+      <rect x="160"  y="912" width="148" height="148" rx="10"/><rect x="328"  y="912" width="148" height="148" rx="10"/><rect x="496"  y="912" width="148" height="148" rx="10"/><rect x="664"  y="912" width="148" height="148" rx="10"/><rect x="832"  y="912" width="148" height="148" rx="10"/><rect x="1000" y="912" width="148" height="148" rx="10"/><rect x="1168" y="912" width="148" height="148" rx="10"/><rect x="1336" y="912" width="148" height="148" rx="10"/>
+    </g>
+    <!-- 点亮几个像素 -->
+    <rect x="328"  y="240" width="148" height="148" rx="10" fill="#f38ba8"/>
+    <rect x="832"  y="240" width="148" height="148" rx="10" fill="#f9e2af"/>
+    <rect x="496"  y="408" width="148" height="148" rx="10" fill="#a6e3a1"/>
+    <rect x="1000" y="408" width="148" height="148" rx="10" fill="#89dceb"/>
+    <rect x="664"  y="576" width="148" height="148" rx="10" fill="#cba6f7"/>
+    <rect x="1168" y="576" width="148" height="148" rx="10" fill="#fab387"/>
+    <rect x="328"  y="744" width="148" height="148" rx="10" fill="#89b4fa"/>
+    <rect x="1336" y="744" width="148" height="148" rx="10" fill="#f5c2e7"/>
+    <rect x="832"  y="912" width="148" height="148" rx="10" fill="#94e2d5"/>
+    <rect x="160"  y="576" width="148" height="148" rx="10" fill="#b4befe"/>
+  </g>
+  <text x="160" y="150" font-family="monospace" font-size="44" fill="#cdd6f4">01001000 01101001</text>
+  <text x="160" y="1130" font-family="monospace" font-size="28" fill="#7f849c"># 点亮一个格子，就是一个比特</text>
+</svg>
