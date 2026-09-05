@@ -3,6 +3,7 @@ import App from "./App.vue";
 import { routes } from "./routes";
 import { posts } from "./lib/posts";
 import { galleryItems } from "./lib/gallery";
+import "katex/dist/katex.min.css"; // 公式样式 + 字体（vite 打包为本地资源）
 import "./styles/variables.css";
 import "./styles/base.css";
 import "./styles/blog.css";

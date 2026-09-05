@@ -1,5 +1,6 @@
 import { marked } from "marked";
 import { markedHighlight } from "marked-highlight";
+import markedKatex from "marked-katex-extension";
 import hljs from "highlight.js/lib/common";
 import { parseFrontmatter } from "./frontmatter";
 import { anchorFor, transformObsidian } from "./obsidian";
@@ -10,6 +11,14 @@ import { anchorFor, transformObsidian } from "./obsidian";
  * - 子文件夹中的 *.md 只参与 [[链接]] 解析（草稿），不发布
  * - attachments/ 下的文件可作为 ![[...]] 嵌入或普通 Markdown 图片引用
  */
+
+/* 数学公式（KaTeX）：$...$ 行内、$$...$$ 块级；构建时渲染，无客户端 JS */
+marked.use(
+  markedKatex({
+    throwOnError: false, // 公式写错时显示红色原文，不中断构建
+    errorColor: "#f38ba8",
+  })
+);
 
 /* 代码高亮（highlight.js 常用语言子集，控制包体积） */
 marked.use(

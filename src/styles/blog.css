@@ -333,6 +333,15 @@
   border: 1px solid var(--surface0);
 }
 
+/* 公式（KaTeX） */
+.post-body .katex { font-size: 1.08em; }
+.post-body .katex-display {
+  margin: 1.4em 0;
+  padding: 2px 8px;
+  overflow-x: auto;
+  overflow-y: hidden; /* 长公式横向滚动，不撑破布局 */
+}
+
 .post-body table {
   width: 100%;
   border-collapse: collapse;

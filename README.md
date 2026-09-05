@@ -7,6 +7,7 @@
 - **Vite + Vue 3 + vue-router**
 - **vite-ssg**：构建时 SSG，每个页面预渲染为静态 HTML
 - **marked + marked-highlight + highlight.js**：Markdown 渲染与代码高亮
+- **KaTeX**（marked-katex-extension）：公式渲染，构建时转成 HTML，字体随站点打包、无 CDN
 - 文章源是 Obsidian vault（`src/posts/`），构建时把 wikilink/嵌入/callout 等 Obsidian 语法转为 HTML
 - 无 blog 框架（非 Hexo/Hugo/Astro），站点即普通 Vue 工程
 
@@ -74,6 +75,7 @@ description: 一句话摘要（缺省时自动取正文首段）
 | `![[图片.png]]` | 嵌入 `attachments/` 中的图片 |
 | `> [!note] 标题`（tip/info/warning/danger/question/example/quote/todo/bug/success/failure，`-` 结尾可折叠） | 提示框（callout） |
 | 正文中的 `#标签` | 链接到 `/tags/<标签>` |
+| `$...$` / `$$...$$` | KaTeX 公式（行内 / 块级），callout 内同样生效，代码块内不解析 |
 
 文章页底部有 **backlinks** 面板，自动列出引用了当前文章的其他文章（双向链接）。
 
