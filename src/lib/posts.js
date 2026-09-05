@@ -1,9 +1,5 @@
-import { marked } from "marked";
-import { markedHighlight } from "marked-highlight";
-import markedKatex from "marked-katex-extension";
-import hljs from "highlight.js/lib/common";
 import { parseFrontmatter } from "./frontmatter";
-import { anchorFor, transformObsidian } from "./obsidian";
+import { anchorFor } from "./obsidian";
 
 /*
  * 文章源 = Obsidian vault（src/posts/）。
@@ -11,46 +7,6 @@ import { anchorFor, transformObsidian } from "./obsidian";
  * - 子文件夹中的 *.md 只参与 [[链接]] 解析（草稿），不发布
  * - attachments/ 下的文件可作为 ![[...]] 嵌入或普通 Markdown 图片引用
  */
-
-/* 数学公式（KaTeX）：$...$ 行内、$$...$$ 块级；构建时渲染，无客户端 JS */
-marked.use(
-  markedKatex({
-    throwOnError: false, // 公式写错时显示红色原文，不中断构建
-    errorColor: "#f38ba8",
-  })
-);
-
-/* 代码高亮（highlight.js 常用语言子集，控制包体积） */
-marked.use(
-  markedHighlight({
-    langPrefix: "hljs language-",
-    highlight(code, lang) {
-      if (lang && hljs.getLanguage(lang)) {
-        return hljs.highlight(code, { language: lang }).value;
-      }
-      return code;
-    },
-  })
-);
-
-/* 标题加锚点 id（与 obsidian.js 的 anchorFor 保持一致），供 [[note#标题]] 跳转 */
-marked.use({
-  renderer: {
-    heading({ tokens, depth }) {
-      const text = this.parser.parseInline(tokens);
-      return `<h${depth} id="${anchorFor(text)}">${text}</h${depth}>\n`;
-    },
-  },
-});
-
-/* 图片 src 重写：vault 相对路径（attachments/...）→ 构建产物 URL */
-const imageRenderer = {
-  image({ href, title, text, tokens }) {
-    const alt = this.parser.parseInline(tokens || []).replace(/"/g, "&quot;");
-    const src = resolveAttachment(href) || href;
-    return `<img src="${src}" alt="${alt}"${title ? ` title="${title}"` : ""} loading="lazy">`;
-  },
-};
 
 /* 取正文第一个非空段落作为摘要 */
 function excerptOf(body) {
@@ -76,8 +32,6 @@ export function readingTimeOf(body) {
 }
 
 /* 附件索引：attachments/ 下的文件 → 构建产物 URL */
-marked.use({ renderer: imageRenderer });
-
 const attachmentFiles = import.meta.glob("../posts/attachments/**/*", {
   query: "?url",
   import: "default",
@@ -159,16 +113,23 @@ const noteHref = (note, hash) =>
   `/posts/${note.slug}` + (hash && !hash.includes("^") ? `#${anchorFor(hash)}` : "");
 
 /* Obsidian 语法转换上下文 */
+let mdMod = null; // 懒加载的重渲染管线（./markdown，含 marked/katex/highlight.js）
 const ctx = {
   resolveNote,
   noteHref,
   isImage,
   resolveAttachment,
-  renderMarkdown: (text) => marked.parse(transformObsidian(text, ctx)),
+  // obsidian.js 的 callout 等块会递归调用它；执行时 mdMod 必已加载
+  renderMarkdown: (text) => mdMod.render(text, ctx),
 };
 
-/* 供其他模块（如画廊注释）复用的完整渲染管线 */
-export const renderMarkdown = (text) => marked.parse(transformObsidian(text, ctx));
+/* 供其他模块（如画廊注释）复用的完整渲染管线。
+   动态 import：重依赖单独成 chunk，首页/列表页不下载，
+   仅文章/画廊详情页（客户端 SPA 导航）或构建预渲染时加载 */
+export async function renderMarkdown(text) {
+  mdMod = mdMod ?? (await import("./markdown"));
+  return ctx.renderMarkdown(text);
+}
 
 /* 渲染发布的文章（顶层笔记） */
 export const posts = notes
@@ -180,7 +141,7 @@ export const posts = notes
     tags: n.tags,
     description: n.description || excerptOf(n.body),
     excerpt: excerptOf(n.body),
-    html: marked.parse(transformObsidian(n.body, ctx)),
+    body: n.body, // 正文原文；html 由 Post.vue 按需调用 renderMarkdown 渲染
     readingTime: readingTimeOf(n.body),
     backlinks: [],
   }))

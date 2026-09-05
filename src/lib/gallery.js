@@ -1,5 +1,4 @@
 import { parseFrontmatter } from "./frontmatter";
-import { renderMarkdown } from "./posts";
 
 /*
  * 画廊数据源（src/gallery/）：
@@ -64,7 +63,7 @@ export const galleryItems = Object.entries(imageFiles)
       description:
         typeof meta.description === "string" ? meta.description : "",
       hasAnnotation,
-      annotationHtml: hasAnnotation ? renderMarkdown(body) : "",
+      annotation: hasAnnotation ? body : "", // 注释正文原文；html 由 GalleryItem.vue 按需渲染
     };
   })
   .sort(

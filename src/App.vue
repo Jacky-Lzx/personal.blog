@@ -1,12 +1,11 @@
 <script setup>
-import { nextTick, onMounted } from "vue";
+import { onMounted } from "vue";
 import { useHead } from "@unhead/vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import AppNav from "./components/AppNav.vue";
 import Footer from "./components/Footer.vue";
 
 const route = useRoute();
-const router = useRouter();
 
 /* 每页 title / description */
 useHead(() => ({
@@ -14,14 +13,22 @@ useHead(() => ({
   meta: [{ name: "description", content: route.meta.description || "" }],
 }));
 
-/* 滚动进入视口渐显（同 personal.homepage 的 reveal.js） */
-function applyReveal() {
-  const els = document.querySelectorAll(".reveal:not(.visible)");
-  if (!els.length) return;
+/* 滚动进入视口渐显（同 personal.homepage 的 reveal.js）。
+   必须是常驻监听：文章/画廊页正文经 Suspense 异步挂载（等待 markdown chunk），
+   路由切换时的一次性扫描抓不到晚挂载的元素，它们会永远停在 opacity:0 */
+function initReveal() {
+  const revealAll = () =>
+    document.querySelectorAll(".reveal:not(.visible)").forEach((el) => el.classList.add("visible"));
+
+  const watchNew = (onNew) =>
+    new MutationObserver(onNew).observe(document.body, { childList: true, subtree: true });
+
   if (!("IntersectionObserver" in window)) {
-    els.forEach((el) => el.classList.add("visible"));
+    revealAll();
+    watchNew(revealAll);
     return;
   }
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -33,14 +40,15 @@ function applyReveal() {
     },
     { threshold: 0.12 },
   );
-  els.forEach((el) => observer.observe(el));
+  const observeAll = () =>
+    document.querySelectorAll(".reveal:not(.visible)").forEach((el) => observer.observe(el));
+
+  observeAll();
+  /* 补抓晚挂载的 .reveal（Suspense 异步内容、路由切换） */
+  watchNew(observeAll);
 }
 
-onMounted(applyReveal);
-/* 路由切换后需等 DOM 更新完成再扫描 .reveal，否则新页面元素尚未挂载 */
-router.afterEach(() => {
-  nextTick(applyReveal);
-});
+onMounted(initReveal);
 </script>
 
 <template>
@@ -48,7 +56,14 @@ router.afterEach(() => {
     <AppNav />
     <main class="main">
       <div class="container">
-        <router-view />
+        <!-- 文章/画廊页的 setup 是 async（正文按需渲染），
+             Vue 要求 async setup 组件必须位于 <Suspense> 内才会渲染；
+             导航时 Suspense 还保留旧页内容直到新页就绪，避免白屏 -->
+        <router-view v-slot="{ Component }">
+          <Suspense>
+            <component :is="Component" />
+          </Suspense>
+        </router-view>
       </div>
     </main>
     <Footer />

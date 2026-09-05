@@ -1,13 +1,14 @@
 <script setup>
-import { computed, nextTick, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useHead } from "@unhead/vue";
 import { useRoute, useRouter } from "vue-router";
-import { posts } from "../lib/posts";
+import { posts, renderMarkdown } from "../lib/posts";
 import NotFound from "./NotFound.vue";
 
 const route = useRoute();
 const router = useRouter();
 const bodyRef = ref(null);
+const html = ref("");
 
 const post = computed(() => posts.find((p) => p.slug === route.params.slug));
 const idx = computed(() => posts.findIndex((p) => p.slug === route.params.slug));
@@ -53,27 +54,44 @@ function onBodyClick(e) {
   });
 }
 
-/* 给 h2/h3 追加锚点链接（客户端增强，SSG 产物中不出现）；
-   文章间 SPA 导航时 post 变化，需重新注入 */
+/* 给 h2/h3 追加锚点链接（客户端增强，SSG 产物中不出现） */
+function injectAnchors() {
+  const body = bodyRef.value;
+  if (!body) return;
+  body.querySelectorAll("h2[id], h3[id]").forEach((h) => {
+    if (h.querySelector(":scope > .anchor-link")) return;
+    const a = document.createElement("a");
+    a.className = "anchor-link";
+    a.href = `#${h.id}`;
+    a.textContent = "¶";
+    a.setAttribute("aria-label", "跳转到本节");
+    h.appendChild(a);
+  });
+}
+
+/* 正文按需渲染：marked/katex/highlight.js 在独立 chunk，
+   列表页不下载；本页（SSR 或客户端）才加载。
+   setup 为 async，vite-ssg 预渲染时会 await，产物不受影响 */
+async function loadHtml(p) {
+  if (!p) return;
+  html.value = await renderMarkdown(p.body);
+  if (typeof document !== "undefined") {
+    await nextTick();
+    injectAnchors();
+  }
+}
+
+await loadHtml(post.value);
+
+/* 首屏（直接打开文章页）：hydration 后补注入锚点链接 */
+onMounted(injectAnchors);
+
+/* 文章间 SPA 导航时重新渲染 */
 watch(
   () => post.value && post.value.slug,
-  (slug) => {
-    if (!slug) return;
-    nextTick(() => {
-      const body = bodyRef.value;
-      if (!body) return;
-      body.querySelectorAll("h2[id], h3[id]").forEach((h) => {
-        if (h.querySelector(":scope > .anchor-link")) return;
-        const a = document.createElement("a");
-        a.className = "anchor-link";
-        a.href = `#${h.id}`;
-        a.textContent = "¶";
-        a.setAttribute("aria-label", "跳转到本节");
-        h.appendChild(a);
-      });
-    });
-  },
-  { immediate: true }
+  (slug, old) => {
+    if (slug && slug !== old) loadHtml(post.value);
+  }
 );
 </script>
 
@@ -109,7 +127,7 @@ watch(
       <div
         class="terminal-body post-body"
         ref="bodyRef"
-        v-html="post.html"
+        v-html="html"
         @click="onBodyClick"
       ></div>
     </div>

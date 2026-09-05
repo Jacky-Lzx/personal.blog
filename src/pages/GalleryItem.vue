@@ -1,8 +1,9 @@
 <script setup>
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useHead } from "@unhead/vue";
 import { useRoute } from "vue-router";
 import { galleryItems, galleryItemById } from "../lib/gallery";
+import { renderMarkdown } from "../lib/posts";
 import NotFound from "./NotFound.vue";
 
 const route = useRoute();
@@ -15,6 +16,23 @@ const idx = computed(() =>
 /* 列表按日期倒序：prev = 更新的，next = 更旧的（与文章页一致） */
 const prev = computed(() => galleryItems[idx.value - 1]);
 const next = computed(() => galleryItems[idx.value + 1]);
+
+/* 注释按需渲染：重依赖（marked/katex/highlight.js）在独立 chunk，
+   画廊列表页不下载；本页（SSR 或客户端）才加载 */
+const annotationHtml = ref("");
+async function loadAnnotation(it) {
+  annotationHtml.value =
+    it && it.hasAnnotation ? await renderMarkdown(it.annotation) : "";
+}
+
+await loadAnnotation(item.value);
+
+watch(
+  () => item.value && item.value.id,
+  (id, old) => {
+    if (id && id !== old) loadAnnotation(item.value);
+  }
+);
 
 useHead(() =>
   item.value
@@ -76,7 +94,7 @@ useHead(() =>
         <span class="dot green"></span>
         <span class="terminal-title">annotation · {{ item.id }}.md</span>
       </div>
-      <div class="terminal-body post-body" v-html="item.annotationHtml"></div>
+      <div class="terminal-body post-body" v-html="annotationHtml"></div>
     </section>
     <p v-else class="t-comment reveal" style="margin-top: 14px">
       # 暂无注释
