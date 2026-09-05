@@ -4,9 +4,8 @@
       <span class="t-comment">© 2026 李泽玺</span>
       <span class="footer-right">
         <span class="t-comment">built with</span>
-        <span class="chip hl-mauve">Vite</span>
-        <span class="chip hl-blue">Vue 3</span>
-        <span class="chip hl-green">vite-ssg</span>
+        <span class="chip hl-mauve">Vite + Vue 3 + vite-ssg</span>
+        <span class="chip hl-lavender">pi + qwen3.8-27b</span>
       </span>
     </div>
   </footer>
