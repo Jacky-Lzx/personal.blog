@@ -1,7 +1,11 @@
 ---
-title: 你好，这是新的博客
+id: hello-blog
+aliases:
+  - 你好，这是新的博客
+tags:
+  - misc
+  - engineering
 date: 2025-09-04
-tags: [misc, engineering]
 description: 博客上线：技术选型、目录结构与写作工作流。
 ---
 

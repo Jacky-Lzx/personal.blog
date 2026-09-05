@@ -102,16 +102,23 @@ const allNotes = import.meta.glob("../posts/**/*.md", {
   eager: true,
 });
 
+/* 显示标题：优先 title（旧格式），其次 aliases 第一项（Obsidian 惯例：
+   id 与文件名一致，标题写在 aliases 里），最后回退到文件名 */
+const titleOf = (meta, file) =>
+  (typeof meta.title === "string" && meta.title) ||
+  (Array.isArray(meta.aliases) && typeof meta.aliases[0] === "string" && meta.aliases[0]) ||
+  file.replace(/\.md$/, "");
+
 const notes = Object.entries(allNotes).map(([path, raw]) => {
   const file = path.split("/").pop();
   const isTopLevel = !path.slice("../posts/".length).includes("/");
   const { meta, body } = parseFrontmatter(raw);
-  const title = typeof meta.title === "string" && meta.title ? meta.title : file.replace(/\.md$/, "");
   return {
     slug: isTopLevel ? file.replace(/\.md$/, "") : null,
     raw,
     body,
-    title,
+    id: typeof meta.id === "string" && meta.id ? meta.id : null,
+    title: titleOf(meta, file),
     date: meta.date != null && meta.date !== "" ? String(meta.date) : "1970-01-01",
     tags: normalizeList(meta.tags),
     aliases: normalizeList(meta.aliases),
@@ -125,7 +132,7 @@ function normalizeList(v) {
   return [];
 }
 
-/* [[链接]] 按 文件名 / 标题 / aliases 解析（不区分大小写） */
+/* [[链接]] 按 id / 文件名 / 标题 / aliases 解析（不区分大小写） */
 const noteIndex = new Map();
 const indexNote = (key, note) => {
   const k = String(key).trim().toLowerCase();
@@ -133,6 +140,7 @@ const indexNote = (key, note) => {
 };
 for (const n of notes) {
   if (n.slug) indexNote(n.slug, n);
+  if (n.id) indexNote(n.id, n);
   indexNote(n.title, n);
   n.aliases.forEach((a) => indexNote(a, n));
 }

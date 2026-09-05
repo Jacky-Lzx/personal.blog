@@ -1,7 +1,11 @@
 ---
-title: 随机计算的一点笔记
+id: on-stochastic-circuits
+aliases:
+  - 随机计算的一点笔记
+tags:
+  - research
+  - stochastic-computing
 date: 2025-09-01
-tags: [research, stochastic-computing]
 description: 随机计算的基本思想：用脉冲流的密度表示数值。
 ---
 
@@ -17,11 +21,11 @@ description: 随机计算的基本思想：用脉冲流的密度表示数值。
 
 这样一来，算术运算可以映射到廉价的逻辑门：
 
-| 运算 | 电路 |
-| :---: | :---: |
-| 乘法 | 单个 `AND` 门 |
+| 运算 |        电路         |
+| :--: | :-----------------: |
+| 乘法 |    单个 `AND` 门    |
 | 加法 | `MUX`（按权重选择） |
-| 减法 | `MUX` + 反相 |
+| 减法 |    `MUX` + 反相     |
 
 ## 待展开
 
