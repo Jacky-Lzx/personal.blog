@@ -4,7 +4,6 @@ aliases:
   - 博客功能展示
 tags:
   - misc
-  - engineering
 date: 2025-09-01
 description: "博客功能展示：Markdown、代码高亮、公式、Obsidian 语法与双向链接。"
 ---
@@ -93,7 +92,7 @@ callout 支持 note / tip / info / question / warning / danger / success / examp
 > [!warning]- 折叠的 callout
 > 以 `-` 结尾的 callout 渲染成可折叠的 `<details>`，点击标题展开。
 
-正文行内标签可点击：#engineering
+正文行内标签可点击：#misc
 
 ## 细节
 
