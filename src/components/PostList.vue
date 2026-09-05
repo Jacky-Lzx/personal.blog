@@ -38,6 +38,9 @@ const list = props.tag
             p.title
           }}</RouterLink>
           <span class="post-tags">
+            <span v-if="p.updated !== p.date" class="post-updated">
+              <span class="t-comment"># updated {{ p.updated }}</span>
+            </span>
             <RouterLink
               v-for="t in p.tags"
               :key="t"

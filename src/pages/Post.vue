@@ -105,6 +105,9 @@ watch(
         <span class="t-val"> posts/{{ post.slug }}.md</span>
         <span class="t-comment"> #</span>
         <span class="meta-item"> date: <span class="t-key">{{ post.date }}</span></span>
+        <span v-if="post.updated !== post.date" class="meta-item">
+          updated: <span class="t-key">{{ post.updated }}</span>
+        </span>
         <span class="meta-item"> read: <span class="t-key">~{{ post.readingTime }} min</span></span>
         <span v-if="post.tags.length" class="post-tags meta-item">
           <RouterLink

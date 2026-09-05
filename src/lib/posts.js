@@ -1,5 +1,6 @@
 import { parseFrontmatter } from "./frontmatter";
 import { anchorFor } from "./obsidian";
+import postDates from "virtual:post-dates";
 
 /*
  * 文章源 = Obsidian vault（src/posts/）。
@@ -76,13 +77,17 @@ const notes = Object.entries(allNotes).map(([path, raw]) => {
   const file = path.split("/").pop();
   const isTopLevel = !path.slice("../posts/".length).includes("/");
   const { meta, body } = parseFrontmatter(raw);
+  const created =
+    meta.date != null && meta.date !== "" ? String(meta.date) : "1970-01-01";
   return {
     slug: isTopLevel ? file.replace(/\.md$/, "") : null,
     raw,
     body,
     id: typeof meta.id === "string" && meta.id ? meta.id : null,
     title: titleOf(meta, file),
-    date: meta.date != null && meta.date !== "" ? String(meta.date) : "1970-01-01",
+    date: created,
+    // 最后修改日期：构建时从 git 提交历史（回退 mtime）取；未改过则等于创建日期
+    updated: (isTopLevel && postDates[file.replace(/\.md$/, "")] && postDates[file.replace(/\.md$/, "")] >= created) ? postDates[file.replace(/\.md$/, "")] : created,
     tags: normalizeList(meta.tags),
     aliases: normalizeList(meta.aliases),
     description: typeof meta.description === "string" ? meta.description : "",
@@ -138,6 +143,7 @@ export const posts = notes
     slug: n.slug,
     title: n.title,
     date: n.date,
+    updated: n.updated,
     tags: n.tags,
     description: n.description || excerptOf(n.body),
     excerpt: excerptOf(n.body),
