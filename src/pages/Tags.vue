@@ -27,6 +27,7 @@ import { allTags } from "../lib/posts";
           </RouterLink>
         </li>
       </ul>
+      <p class="t-comment end-mark">-- end of list --</p>
     </div>
   </div>
 </template>
