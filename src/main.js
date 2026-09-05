@@ -10,7 +10,7 @@ import "./styles/blog.css";
 
 export const createApp = ViteSSG(
   App,
-  { routes, base: "/" }, // 独立域名/仓库；子路径部署时改为 "/blog/"（需与 vite.config.js 一致）
+  { routes, base: "/personal.blog/" }, // 项目站点子路径部署，需与 vite.config.js 一致
   ({ app, router, isClient }) => {
     if (isClient) {
       // 快捷键 t 切换主题（与 personal.homepage 一致）
