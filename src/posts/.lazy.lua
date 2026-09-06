@@ -28,4 +28,15 @@ return {
       },
     },
   },
+  {
+    "Jacky-Lzx/image-insert.nvim",
+    dev = true,
+    opts = {
+      dir_path = "attachments",
+      prompt_for_file_name = false,
+      relative_to_current_file = false,
+      insert_relative_to = "file",
+      process = { cmd = "magick - avif:-", extension = "avif" },
+    },
+  },
 }

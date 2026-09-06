@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="31.106834mm"
+   height="4.5940351mm"
+   viewBox="0 0 31.106834 4.5940351"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <g
+       id="LogicSymbols.svg:And_Gate">
+      <title
+         id="title11">And Gate</title>
+      <path
+         d="M 25,70 V 60 50 40 30 h 30 c 11.045695,0 20,8.954305 20,20 0,11.045695 -8.954305,20 -20,20 z"
+         id="path12" />
+    </g>
+  </defs>
+  <g
+     id="layer3"
+     transform="translate(-60.30259,-39.655836)">
+    <g
+       id="g3-2"
+       transform="translate(41.520102,-17.77559)"
+       style="display:inline">
+      <use
+         xlink:href="#LogicSymbols.svg:And_Gate"
+         style="fill:none;stroke:#000000;stroke-width:2.28768;stroke-dasharray:none"
+         id="use1-9-4"
+         transform="matrix(0.10992812,0,0,0.10863762,28.869102,54.296559)" />
+      <path
+         style="fill:none;fill-opacity:0.138728;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         d="M 31.617306,58.642064 H 29.683554"
+         id="path2-8" />
+      <path
+         style="fill:none;fill-opacity:0.138728;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         d="M 39.047463,59.72844 H 37.113711"
+         id="path2-4-3" />
+      <path
+         style="fill:none;fill-opacity:0.138728;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         d="M 31.617306,60.814814 H 29.529117"
+         id="path3-9" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:2.82223px;line-height:1.1;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;text-anchor:middle;display:inline;stroke-width:0.264999"
+       x="62.908558"
+       y="43.230137"
+       id="text2"
+       transform="translate(2.4321527,-1.403165)"><tspan
+         id="tspan2"
+         style="stroke-width:0.264999"
+         x="62.908558"
+         y="43.230137">1/2=1100</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.82223px;line-height:1.1;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;text-anchor:middle;display:inline;stroke-width:0.264999"
+       x="63.030514"
+       y="45.402885"
+       id="text3"
+       transform="translate(2.4321527,-1.403165)"><tspan
+         id="tspan3"
+         style="stroke-width:0.264999"
+         x="63.030514"
+         y="45.402885">1/2=1001</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.82223px;line-height:1.1;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;text-anchor:middle;display:inline;stroke-width:0.264999"
+       x="83.653893"
+       y="44.316513"
+       id="text4"
+       transform="translate(2.4321527,-1.403165)"><tspan
+         id="tspan4"
+         style="stroke-width:0.264999"
+         x="83.653893"
+         y="44.316513">1000=1/4</tspan></text>
+  </g>
+</svg>
