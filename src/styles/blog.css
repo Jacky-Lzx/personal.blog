@@ -403,6 +403,7 @@
 /* 图片卡片：卡片样式套在包裹 <img> 的段落上（invert 滤镜只作用于 img，衬底不会被翻转）。
    ![](...) 由 marked 包进 <p>；![[...]] 独立行嵌入在 transformWikilinks 里同样包进 <p> */
 .post-body p:has(> img:only-child) {
+  margin: 1.4em 0; /* 与表格/公式一样给足上下呼吸空间，和正文分隔 */
   padding: 10px;
   border: 1px solid var(--surface0);
   border-radius: 10px;
