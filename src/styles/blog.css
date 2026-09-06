@@ -414,7 +414,7 @@
 }
 /* 逐图配置：默认不翻转；黑线透明底的图（Inkscape 导出）需显式加 invert 才能在暗色主题下可见，
    hue-rotate 保色相只翻明度。
-   写法：![[img|520|invert]] / ![[img|invert]] / ![alt|511|invert](src) / ![alt](src "invert") */
+   写法：![[img|520|invert]] / ![[img|invert]] / ![alt|511|invert](src) / ![alt|invert](src) / ![alt](src "invert") */
 :root:not([data-theme="latte"]) .post-body img.invert {
   filter: invert(1) hue-rotate(180deg);
 }
