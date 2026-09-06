@@ -9,9 +9,9 @@
   --overlay0: #6c7086;
   --overlay1: #7f849c;
   --overlay2: #9399b2;
-  --subtext0: #7f849c;
-  --subtext1: #a6adc8;
-  --subtext2: #bac2de;
+  --subtext0: #a6adc8; /* 官方 subtext0 */
+  --subtext1: #bac2de; /* 官方 subtext1 */
+  --subtext2: #bac2de; /* 自定义第三档（官方无 subtext2），与官方 subtext1 相同，供正文使用 */
   --text: #cdd6f4;
   --lavender: #b4befe;
   --blue: #89b4fa;
@@ -48,9 +48,9 @@
   --overlay0: #9ca0b0;
   --overlay1: #8c8fa1;
   --overlay2: #7c7f93;
-  --subtext0: #6c6f85;
-  --subtext1: #5c5f77;
-  --subtext2: #4c4f69;
+  --subtext0: #6c6f85; /* 官方 subtext0 */
+  --subtext1: #5c5f77; /* 官方 subtext1 */
+  --subtext2: #4c4f69; /* 自定义第三档（官方无 subtext2），取 latte 的 text，供正文使用 */
   --text: #4c4f69;
   --lavender: #7287fd;
   --blue: #1e66f5;
