@@ -15,6 +15,34 @@ import { anchorFor, transformObsidian } from "./obsidian";
 /* render() 期间当前使用的 ctx（marked 渲染器回调拿不到入参，用模块级变量传递） */
 let activeCtx = null;
 
+/* 去掉 HTML 中 <pre> 代码块之外的换行（代码块内的换行原样保留） */
+function stripNewlinesOutsidePre(html) {
+  let out = "";
+  let last = 0;
+  for (const m of html.matchAll(/<pre[\s\S]*?<\/pre>/g)) {
+    out += html.slice(last, m.index).replace(/\n/g, "");
+    out += m[0];
+    last = m.index + m[0].length;
+  }
+  return out + html.slice(last).replace(/\n/g, "");
+}
+
+/* 段落内的软换行直接拼接（不产生空格、也不产生 <br>）；
+   行尾两个空格 / 反斜杠的硬换行仍渲染为 <br> */
+marked.use({
+  renderer: {
+    paragraph({ tokens }) {
+      const text = this.parser.parseInline(tokens).replace(/\n/g, "");
+      return `<p>${text}</p>\n`;
+    },
+    // 列表项内的续行换行同样拼接；嵌套 <pre> 代码块内的换行保留
+    listitem({ tokens }) {
+      const body = stripNewlinesOutsidePre(this.parser.parse(tokens));
+      return `<li>${body}</li>\n`;
+    },
+  },
+});
+
 /* 数学公式（KaTeX）：$...$ 行内、$$...$$ 块级 */
 marked.use(
   markedKatex({
