@@ -295,7 +295,9 @@
 .post-body h3::before { content: "## "; color: var(--overlay1); font-size: .85em; }
 .post-body a { color: var(--blue); }
 .post-body a:hover { color: var(--mauve); text-decoration: underline; }
-.post-body strong { color: var(--text); }
+/* 加粗文字用红色突出；霞鹜文楷只有 400 切片，<strong> 由浏览器仿粗，
+   再用 text-stroke 描边加重笔画 */
+.post-body strong { color: var(--flamingo); -webkit-text-stroke: .5px currentColor; }
 .post-body em { color: var(--subtext2); }
 
 .post-body code {
