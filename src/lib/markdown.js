@@ -29,9 +29,40 @@ function stripNewlinesOutsidePre(html) {
 
 /* 段落内的软换行直接拼接（不产生空格、也不产生 <br>）；
    行尾两个空格 / 反斜杠的硬换行仍渲染为 <br> */
+/* 图片 caption：段落恰好为「图片 + 下一行 _..._」时渲染为 <figure> + <figcaption>。
+   例：
+     ![alt|invert](img.png)
+     _这是图注_ */
+function renderImageCaption(self, tokens) {
+  const content = tokens.filter((t) => t.type !== "text" || t.raw.trim() !== "");
+  if (content.length !== 2 || content[0].type !== "image") return null;
+  const cap = content[1];
+  // 图片与说明之间必须有换行（说明在图片的下一行，而非同一行）
+  const gap = tokens
+    .slice(tokens.indexOf(content[0]), tokens.indexOf(cap))
+    .map((t) => t.raw)
+    .join("");
+  if (!gap.includes("\n")) return null;
+  let capTokens = null;
+  if (cap.type === "em" && !cap.raw.includes("\n")) {
+    capTokens = cap.tokens; // _..._ 被 marked 解析为 em，取内部 token，保留加粗/链接等行内语法
+  } else if (cap.type === "text") {
+    const m = cap.raw.trim().match(/^_([\s\S]+)_$/);
+    if (m && !cap.raw.includes("\n")) {
+      capTokens = [{ type: "text", raw: m[1], text: m[1], tokens: [] }];
+    }
+  }
+  if (!capTokens) return null;
+  const imgHtml = self.parser.parseInline([content[0]]);
+  const capHtml = self.parser.parseInline(capTokens);
+  return `<figure class="image-fig"><div class="image-fig__img">${imgHtml}</div><figcaption>${capHtml}</figcaption></figure>\n`;
+}
+
 marked.use({
   renderer: {
     paragraph({ tokens }) {
+      const fig = renderImageCaption(this, tokens);
+      if (fig) return fig;
       const text = this.parser.parseInline(tokens).replace(/\n/g, "");
       return `<p>${text}</p>\n`;
     },

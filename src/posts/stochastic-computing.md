@@ -53,8 +53,7 @@ description: "随机计算（Stochastic Computing）：用比特流中 1 的比�
    但是 SC 具有**渐进精度**（progressive precision）的性质：计算准确度和比特流长度成正比。
    如果在时间 $t$，计算的结果已经满足应用的精度预算，就可以提前终止计算，节省延迟和能耗。
 
-   ![Progressive precision demo|invert](attachments/progressive_precision.png)
-
+   ![Progressive precision demo|400|invert](attachments/progressive_precision.png)
    _在边缘检测应用里，一个渐进精度好的 SC 电路 (a) 64 个周期后的输出就足够好，而渐进精度差的要 512 个周期——同样的精度预算下，延迟差 8 倍。_
 
 ## 随机计算：用概率表示数字

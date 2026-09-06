@@ -401,8 +401,10 @@
 }
 
 /* 图片卡片：卡片样式套在包裹 <img> 的段落上（invert 滤镜只作用于 img，衬底不会被翻转）。
-   ![](...) 由 marked 包进 <p>；![[...]] 独立行嵌入在 transformWikilinks 里同样包进 <p> */
-.post-body p:has(> img:only-child) {
+   ![](...) 由 marked 包进 <p>；![[...]] 独立行嵌入在 transformWikilinks 里同样包进 <p>；
+   带 caption 的图（下一行 _..._）渲染为 figure.image-fig，同样套卡片 */
+.post-body p:has(> img:only-child),
+.post-body figure.image-fig {
   margin: 1.4em 0; /* 与表格/公式一样给足上下呼吸空间，和正文分隔 */
   padding: 10px;
   border: 1px solid var(--surface0);
@@ -414,6 +416,15 @@
   max-width: 100%;
   display: block;
   margin: 0 auto;
+}
+/* 图片 caption：图下一行以 _..._ 包裹的文字 */
+.post-body .image-fig figcaption {
+  margin-top: 10px;
+  padding: 0 4px;
+  font-size: 0.85em;
+  line-height: 1.6;
+  color: var(--subtext0);
+  text-align: center;
 }
 /* 逐图配置：默认不翻转；黑线透明底的图（Inkscape 导出）需显式加 invert 才能在暗色主题下可见，
    hue-rotate 保色相只翻明度。
