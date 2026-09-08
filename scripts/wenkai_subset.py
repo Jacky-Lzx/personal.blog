@@ -137,7 +137,7 @@ def main():
             "  font-style: normal;\n"
             "  font-weight: 400;\n"
             "  font-display: swap;\n"
-            f"  src: url('/fonts/wenkai/{name}') format('woff2');\n"
+            f"  src: url('./{name}') format('woff2');\n"  # 相对路径：与 CSS 同目录，避免 GitHub Pages 子目录部署（base 前缀）下 404
             f"  unicode-range: {ur};\n"
             "}"
         )
